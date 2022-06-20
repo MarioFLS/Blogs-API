@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     { timestamps: false });
 
   Category.associate = (models) => {
-    Category.hasOne(models.PostCategory,
+    Category.hasMany(models.PostCategory,
       {foreignKey: "categoryId", as: 'postCategory'});
   }
   return Category;
