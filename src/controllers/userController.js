@@ -17,9 +17,16 @@ const createUser = async (req, res, next) => {
   return res.status(201).json(user);
 };
 
-const getUser = async (req, res) => {
+const getAllUser = async (_req, res) => {
   const allUser = await User.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
   res.status(200).json(allUser);
 };
 
-module.exports = { userLogin, createUser, getUser };
+const getUser = async (req, res, next) => {  
+  const { id } = req.params;
+  const user = await userService.getUser(id);
+  if (user.error) return next(user.error);
+  res.status(200).json(user);
+};
+
+module.exports = { userLogin, createUser, getAllUser, getUser };

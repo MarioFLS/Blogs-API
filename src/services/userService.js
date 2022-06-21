@@ -36,4 +36,11 @@ const createUser = async (displayName, email, password, image) => {
   return { token };
 };
 
-module.exports = { verifyLogin, createUser };
+const getUser = async (id) => {  
+  const user = await User.findOne({ where: { id },
+    attributes: ['id', 'displayName', 'email', 'image'] });
+  if (!user) return { error: { code: 404, message: 'User does not exist' } };
+  return user;
+};
+
+module.exports = { verifyLogin, createUser, getUser };
