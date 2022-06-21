@@ -3,7 +3,6 @@ module.exports = (erro, _req, res, _next) => {
     const statusCode = erro.code || 500;
     return res.status(statusCode).json({ message: erro.message });
   }
-  console.error(erro);
   return res
     .status(500)
     .json({

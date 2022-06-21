@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const { User } = require('../database/models');
 const userService = require('../services/userService');
 
 const userLogin = async (req, res, next) => {
@@ -17,4 +17,9 @@ const createUser = async (req, res, next) => {
   return res.status(201).json(user);
 };
 
-module.exports = { userLogin, createUser };
+const getUser = async (req, res) => {
+  const allUser = await User.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
+  res.status(200).json(allUser);
+};
+
+module.exports = { userLogin, createUser, getUser };
