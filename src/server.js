@@ -1,4 +1,3 @@
-require('express-async-errors');
 require('dotenv').config();
 const app = require('./api');
 const errorMiddleware = require('./middleware/error');
