@@ -1,9 +1,9 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
+/* 'use strict'; */
+const modelUser = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-      id: { type: DataTypes.INTERGER, primaryKey: true, autoIncrement: true },
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       displayName: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
@@ -17,3 +17,5 @@ module.exports = (sequelize, DataTypes) => {
   }
   return User;
 };
+
+module.exports = modelUser;
