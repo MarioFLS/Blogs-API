@@ -1,4 +1,4 @@
-/* 'use strict'; */
+'use strict';
 const modelUser = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -8,8 +8,7 @@ const modelUser = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       image: DataTypes.STRING,
-    },
-    { timestamps: false });
+    });
 
   User.associate = (models) => {
     User.hasMany(models.BlogPost,
