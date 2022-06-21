@@ -10,7 +10,7 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use('/login', require('./routes/userRoute'));
+app.use('/', require('./routes/userRoute'));
 
 app.use(errorMiddleware);
 
