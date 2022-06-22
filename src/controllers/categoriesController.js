@@ -1,4 +1,5 @@
 const categoriesRoute = require('../services/categoriesService');
+const { Category } = require('../database/models');
 
 const createCategories = async (req, res, next) => {
   const categories = await categoriesRoute.createCategories(req.body);
@@ -9,4 +10,9 @@ const createCategories = async (req, res, next) => {
   res.status(201).json({ id, name });
 };
 
-module.exports = { createCategories };
+const getCategories = async (_req, res) => {
+  const getAll = await Category.findAll({ attributes: ['id', 'name'] });
+  res.status(200).json(getAll);
+};
+
+module.exports = { createCategories, getCategories };
