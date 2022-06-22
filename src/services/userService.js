@@ -2,7 +2,7 @@ const joi = require('joi');
 const tokenJwt = require('jsonwebtoken');
 const { User } = require('../database/models');
 
-const requiredItemString = joi.string().empty().required();
+const requiredItemString = joi.string().not().empty().required();
 const secret = process.env.JWT_SECRET;
 
 const generateToken = (payload) => tokenJwt.sign({ payload }, secret, { expiresIn: '1h' });
@@ -20,12 +20,12 @@ const verifyLogin = async (email, password) => {
 };
 
 const createUser = async (displayName, email, password, image) => {
-  const validatyNewUser = joi.object({
+  const newUserValidation = joi.object({
     displayName: requiredItemString.min(8),
     password: requiredItemString.min(6),
     email: requiredItemString.email(),
   });
-  const { error } = validatyNewUser.validate({ displayName, email, password });
+  const { error } = newUserValidation.validate({ displayName, email, password });
   if (error) return { error: { code: 400, message: error.details[0].message } };
 
   const user = await User.findOne({ where: { email } });

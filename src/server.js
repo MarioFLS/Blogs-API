@@ -12,6 +12,8 @@ app.get('/', (_request, response) => {
 
 app.use('/', require('./routes/userRoute'));
 
+app.use('/', require('./routes/categoriesRoute'));
+
 app.use(errorMiddleware);
 
 app.listen(port, () => console.log('ouvindo porta', port));
