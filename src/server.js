@@ -1,7 +1,7 @@
 require('dotenv').config();
 const app = require('./api');
 const errorMiddleware = require('./middleware/error');
-const validateToken = require('./middleware/validateToken');
+const tokenValidate = require('./middleware/tokenValidate');
 
 // não remova a variável `API_PORT` ou o `listen`
 const port = process.env.API_PORT || 3000;
@@ -12,8 +12,8 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/', require('./routes/userRoute'));
-
-app.use('/', validateToken, require('./routes/categoriesRoute'));
+app.use('/categories', tokenValidate, require('./routes/categoriesRoute'));
+app.use('/post', tokenValidate, require('./routes/postRoute'));
 
 app.use(errorMiddleware);
 
