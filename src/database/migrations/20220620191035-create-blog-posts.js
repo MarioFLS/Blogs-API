@@ -18,6 +18,8 @@ module.exports = {
       },
       userId: {
         allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: "Users",
           key: "id",
@@ -26,22 +28,14 @@ module.exports = {
       },
       published: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
       },
       updated: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
       },
-      createdAt: {
-        allowNull: false,
-        defaultValue: Sequelize.fn('now'),
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        defaultValue: Sequelize.fn('now'),
-        type: Sequelize.DATE
-      }
     });
   },
   down: async (queryInterface, _Sequelize) => {
