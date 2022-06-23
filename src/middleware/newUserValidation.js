@@ -10,6 +10,6 @@ module.exports = (req, res, next) => {
     email: requiredItemString.email(),
   });
   const { error } = newUserValidation.validate({ displayName, email, password });
-  if (error) res.status(400).json({ message: error.details[0].message });
+  if (error) return res.status(400).json({ message: error.details[0].message });
   return next();
 };
