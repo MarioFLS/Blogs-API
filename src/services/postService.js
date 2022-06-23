@@ -34,11 +34,13 @@ const insertPost = async (title, content, authorization) => {
 
 const createPost = async ({ title, content, categoryIds }, { authorization }) => {
   const findCategory = await searchHelpers.findCategory(categoryIds);
-  if (findCategory.length === 0) {
+  const existCategory = findCategory.map((_item, index) => categoryIds[index]);
+  if (existCategory.length !== categoryIds.length) {
     return { error: { code: 400, message: '"categoryIds" not found' } };
   }
   const { id: postId } = await insertPost(title, content, authorization);
   await sequelize.transaction(async (post) => {
+    console.log('a');
     const categories = categoryIds.map((categoryId) => ({ postId, categoryId }));
     await PostCategory.bulkCreate(categories, post); 
   });

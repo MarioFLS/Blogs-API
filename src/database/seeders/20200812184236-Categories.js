@@ -10,6 +10,10 @@ module.exports = {
           id: 2,
           name: 'Escola',
         },
+        {
+          id: 3,
+          name: 'Revolução',
+        },
       ], { timestamps: false });
   },
 
