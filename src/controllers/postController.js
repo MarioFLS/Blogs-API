@@ -20,7 +20,15 @@ const getPostId = async (req, res, next) => {
   const post = await postService.getPostId(id);
 
   if (post.error) return next(post.error);
-  return res.status(200).json(post.user);
+  return res.status(200).json(post);
 };
 
-module.exports = { createPost, getPost, getPostId };
+const editPost = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await postService.editPost(req.body, req.headers, id);
+  const getEditedPost = await postService.getPostId(id);
+  if (post.error) return next(post.error);
+  return res.status(200).json(getEditedPost);
+};
+
+module.exports = { createPost, getPost, getPostId, editPost };
