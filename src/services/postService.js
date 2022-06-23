@@ -29,8 +29,7 @@ const getPostId = async (id) => {
     if (item.id === Number(id)) acc.user = item.dataValues; 
     return acc;
   }, {});
-
-  if (!post.id) return { error: { code: 404, message: 'Post does not exist' } };
+  if (!resultPost.user) return { error: { code: 404, message: 'Post does not exist' } };
   return resultPost;
 };
 
