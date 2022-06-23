@@ -65,7 +65,6 @@ const deletePost = async (authorization, id) => {
   } if (post.userId !== isUserAuthorized.id) {
     return { error: { code: 401, message: 'Unauthorized user' } }; 
   }
-  console.log('NÃO ENTROU');
   return post;
 };
 
