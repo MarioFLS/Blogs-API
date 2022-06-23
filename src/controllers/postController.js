@@ -20,7 +20,7 @@ const getPostId = async (req, res, next) => {
   const post = await postService.getPostId(id);
 
   if (post.error) return next(post.error);
-  return res.status(200).json(post);
+  return res.status(200).json(post.user);
 };
 
 module.exports = { createPost, getPost, getPostId };
