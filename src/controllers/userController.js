@@ -29,4 +29,12 @@ const getUser = async (req, res, next) => {
   res.status(200).json(user);
 };
 
-module.exports = { userLogin, createUser, getAllUser, getUser };
+const deleteUser = async (req, res, next) => {  
+  const { authorization } = req.headers;
+  const user = await userService.deleteUser(authorization);
+  console.log(user);
+  if (user.error) return next(user.error);
+  res.status(204).json();
+};
+
+module.exports = { userLogin, createUser, getAllUser, getUser, deleteUser };

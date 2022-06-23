@@ -4,6 +4,7 @@ const config = require('../database/config/config');
 const { BlogPost, PostCategory } = require('../database/models');
 const searchHelpers = require('../helpers/searchInDatabase');
 const formatHelpers = require('../helpers/requestFormat');
+const authorizationHelpers = require('../helpers/userAuthorization');
 
 const sequelize = new Sequelize(config.development);
 
@@ -43,15 +44,9 @@ const getPostId = async (id) => {
   return resultPost.user;
 };
 
-const userAuthorization = async (authorization) => {
-  const email = jwt.decode(authorization).payload;
-  const { dataValues } = await searchHelpers.findEmailUser(email);
-  return dataValues;
-};
-
 const editPost = async ({ title, content }, { authorization }, id) => {
   const post = await getPostId(id);
-  const isUserAuthorized = await userAuthorization(authorization);
+  const isUserAuthorized = await authorizationHelpers.userAuthorization(authorization);
   if (post.userId === isUserAuthorized.id) {
     return BlogPost.update({ title, content }, { where: { id } });
   }
@@ -60,7 +55,7 @@ const editPost = async ({ title, content }, { authorization }, id) => {
 
 const deletePost = async (authorization, id) => {
   const post = await getPostId(id);
-  const isUserAuthorized = await userAuthorization(authorization);
+  const isUserAuthorized = await authorizationHelpers.userAuthorization(authorization);
   
   if (post.error) return post;
   if (post.userId === isUserAuthorized.id) {

@@ -1,5 +1,6 @@
 const tokenJwt = require('jsonwebtoken');
 const { User } = require('../database/models');
+const authorizationHelpers = require('../helpers/userAuthorization');
 
 const secret = process.env.JWT_SECRET;
 
@@ -33,4 +34,10 @@ const getUser = async (id) => {
   return user;
 };
 
-module.exports = { verifyLogin, createUser, getUser };
+const deleteUser = async (authorization) => {  
+  const user = await authorizationHelpers(authorization);
+  await User.destroy({ where: { id: user.id } });
+  return user;
+};
+
+module.exports = { verifyLogin, createUser, getUser, deleteUser };
