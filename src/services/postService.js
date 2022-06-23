@@ -50,6 +50,9 @@ const editPost = async ({ title, content }, { authorization }, id) => {
   if (post.userId === isUserAuthorized.dataValues.id) {
     return BlogPost.update({ title, content }, { where: { id } });
   }
+  if (post.userId !== isUserAuthorized.id) {
+    return { error: { code: 401, message: 'Unauthorized user' } }; 
+  }
   return post;
 };
 
@@ -59,7 +62,10 @@ const deletePost = async (authorization, id) => {
   if (post.error) return post;
   if (post.userId === isUserAuthorized.id) {
     return BlogPost.destroy({ where: { id } });
+  } if (post.userId !== isUserAuthorized.id) {
+    return { error: { code: 401, message: 'Unauthorized user' } }; 
   }
+  console.log('NÃO ENTROU');
   return post;
 };
 
