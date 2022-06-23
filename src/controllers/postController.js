@@ -4,7 +4,8 @@ const postService = require('../services/postService');
 const createPost = async (req, res, next) => {
   const post = await postService.createPost(req.body, req.headers);
   if (post.error) return next(post.error);
-  const { dataValues } = await helpers.findPost(post);
+  const dataValues = await helpers.findPost(post.id);
+  console.log(dataValues);
 
   return res.status(201).json(dataValues);
 };
