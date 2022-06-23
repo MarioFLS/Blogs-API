@@ -46,22 +46,21 @@ const getPostId = async (id) => {
 
 const editPost = async ({ title, content }, { authorization }, id) => {
   const post = await getPostId(id);
-  const isUserAuthorized = await authorizationHelpers.userAuthorization(authorization);
-  if (post.userId === isUserAuthorized.id) {
+  const isUserAuthorized = await authorizationHelpers(authorization);
+  if (post.userId === isUserAuthorized.dataValues.id) {
     return BlogPost.update({ title, content }, { where: { id } });
   }
-  return { error: { code: 401, message: 'Unauthorized user' } };
+  return post;
 };
 
 const deletePost = async (authorization, id) => {
   const post = await getPostId(id);
-  const isUserAuthorized = await authorizationHelpers.userAuthorization(authorization);
-  
+  const isUserAuthorized = await authorizationHelpers(authorization);
   if (post.error) return post;
   if (post.userId === isUserAuthorized.id) {
     return BlogPost.destroy({ where: { id } });
   }
-  return { error: { code: 401, message: 'Unauthorized user' } };
+  return post;
 };
 
 module.exports = { createPost, getPost, getPostId, editPost, deletePost };
