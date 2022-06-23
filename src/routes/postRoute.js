@@ -6,6 +6,7 @@ const routes = express.Router();
 
 routes.post('/', postValidate.create, postController.createPost);
 routes.get('/', postController.getPost);
+routes.delete('/:id', postController.deletePost);
 routes.get('/:id', postController.getPostId);
 routes.put('/:id', postValidate.edit, postController.editPost);
 
