@@ -5,14 +5,12 @@ const createPost = async (req, res, next) => {
   const post = await postService.createPost(req.body, req.headers);
   if (post.error) return next(post.error);
   const dataValues = await helpers.findPost(post.id);
-  console.log(dataValues);
-
   return res.status(201).json(dataValues);
 };
 
 const getPost = async (_req, res) => {
-  const post = await postService.getPost();
-  const resultPost = post.map((item) => item.dataValues);
+  const { getAllPost } = await postService.getPost();
+  const resultPost = getAllPost.map((item) => item.dataValues);
   return res.status(200).json(resultPost);
 };
 

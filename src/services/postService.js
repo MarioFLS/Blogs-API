@@ -5,13 +5,14 @@ const config = require('../database/config/config');
 const { BlogPost, PostCategory } = require('../database/models');
 const searchHelpers = require('../helpers/searchInDatabase');
 const authorizationHelpers = require('../helpers/userAuthorization');
-const postFormat = require('../helpers/requestFormat');
+const { postRequestFormat } = require('../helpers/requestFormat');
 
 const sequelize = new Sequelize(config.development);
 
-const getPost = async () => {
-  const post = await BlogPost.findAll(postFormat.postRequestFormat);
-  return post;
+const getPost = async (id = 0) => {
+  const getAllPost = await BlogPost.findAll(postRequestFormat);
+  const getPostById = await BlogPost.findOne({ where: { id }, ...postRequestFormat });
+  return { getAllPost, getPostById };
 };
 
 const insertPost = async (title, content, authorization) => {
@@ -42,16 +43,9 @@ const createPost = async ({ title, content, categoryIds }, { authorization }) =>
 };
 
 const getPostId = async (id) => {
-  const post = await getPost();
-  const resultPost = post.reduce((acc, item) => {
-    if (item.id === Number(id)) {
-      acc.user = item.dataValues;
-    }
-    return acc;
-  }, {});
-
-  if (!resultPost.user) { return { error: { code: 404, message: 'Post does not exist' } }; }
-  return resultPost.user;
+  const { getPostById } = await getPost(id);
+  if (!getPostById) return { error: { code: 404, message: 'Post does not exist' } };
+  return getPostById.dataValues;
 };
 
 const editPost = async ({ title, content }, { authorization }, id) => {
@@ -84,7 +78,7 @@ const searchPost = async (q) => BlogPost.findAll({
         { title: { [Op.like]: `%${q}%` } },
         { content: { [Op.like]: `%${q}%` } },
       ] },
-...postFormat.postRequestFormat });
+...{ postRequestFormat }.postRequestFormat });
 
 module.exports = {
   createPost,
