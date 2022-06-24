@@ -2,33 +2,15 @@ const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
 const config = require('../database/config/config');
-const {
-  BlogPost,
-  PostCategory,
-  User,
-  Category,
-} = require('../database/models');
+const { BlogPost, PostCategory } = require('../database/models');
 const searchHelpers = require('../helpers/searchInDatabase');
 const authorizationHelpers = require('../helpers/userAuthorization');
+const postFormat = require('../helpers/requestFormat');
 
 const sequelize = new Sequelize(config.development);
 
 const getPost = async () => {
-  const post = await BlogPost.findAll({
-    include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
-      },
-      {
-        model: Category,
-        as: 'categories',
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        through: { attributes: [] },
-      },
-    ],
-  });
+  const post = await BlogPost.findAll(postFormat.postRequestFormat);
   return post;
 };
 
@@ -102,19 +84,7 @@ const searchPost = async (q) => BlogPost.findAll({
         { title: { [Op.like]: `%${q}%` } },
         { content: { [Op.like]: `%${q}%` } },
       ] },
-include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
-      },
-      {
-        model: Category,
-        as: 'categories',
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        through: { attributes: [] },
-      },
-    ] });
+...postFormat.postRequestFormat });
 
 module.exports = {
   createPost,
