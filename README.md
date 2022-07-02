@@ -12,7 +12,7 @@ Essa Aplicação Permite:
 
 ## Tecnologias Usadas
 
-> Desenvolvida utilizando: JavaScript, NodeJS, expres, express-async-errors, Docker, Sequelize e MySQL.
+> Desenvolvida utilizando: JavaScript, NodeJS, expres, express-async-errors, Docker, Sequelize.
 
 # Como Utilizar
 
@@ -94,19 +94,21 @@ Como o arquivo `.env` não será enviado para o GitHub (não se preocupe com iss
 
 <details>
   <summary><strong>Posts</strong></summary><br />
-  ## Você precisa da autorização. No produto, isso vem atrávez do token.
+Você precisa da autorização.
+  No produto, isso vem atrávez do token.
   A authorização é dada para todo user quando se cria o email ou requesita.
   Coloque na aba de *headers* com o nome: "Authorization";
   
   > Pegar todos os Posts **GET**
-``[http://localhost:3000/post](http://localhost:3000/post)``
+``
+http://localhost:3000/post``
 
 > Pegar Posts pelo ID **GET**. Precisa ser um ID que exista. Se não retornará um erro!
-``[http://localhost:3000/post/2](http://localhost:3000/post/2)``
+``http://localhost:3000/post/2``
 
 
 > Criar novos Posts **POST**
-``[http://localhost:3000/post](http://localhost:3000/post)``
+`[http://localhost:3000/post``
 
 ```
   {
@@ -116,7 +118,7 @@ Como o arquivo `.env` não será enviado para o GitHub (não se preocupe com iss
 ```
 
 > Editar um Produto **PUT**. Você precisa passar um id existente!
-``[http://localhost:3000/products/4](http://localhost:3000/products/4)``
+``http://localhost:3000/products/4``
 
 ```
   {
@@ -126,7 +128,7 @@ Como o arquivo `.env` não será enviado para o GitHub (não se preocupe com iss
 ```
 
 > Deletar um Post **Delete**. Você precisa passar um id existente!
-``[http://localhost:3000/products/4](http://localhost:3000/products/4)``
+``http://localhost:3000/products/4``
  
   <br />
 </details>
@@ -134,8 +136,10 @@ Como o arquivo `.env` não será enviado para o GitHub (não se preocupe com iss
 
 <details>
   <summary><strong>Criar Usuários</strong></summary><br />
+  
   > Criar um novo user **POST**
-``[http://localhost:3000/user](http://localhost:3000/user)``
+``http://localhost:3000/user``
+
 ```
   {
     "displayName": "mario fernando",
@@ -146,7 +150,7 @@ Como o arquivo `.env` não será enviado para o GitHub (não se preocupe com iss
 ```
 
 > Logar como usuário **POST**
-``[http://localhost:3000/login](http://localhost:3000/login)``
+``http://localhost:3000/login``
 
 ```
   {
