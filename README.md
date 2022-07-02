@@ -93,8 +93,8 @@ Como o arquivo `.env` não será enviado para o GitHub (não se preocupe com iss
 > Alguns precisaram de informações adicionais no body da requisição.
 
 <details>
-  <summary><strong>Posts</strong></summary><br />
-Você precisa da autorização.
+  <summary><strong>Criar Posts</strong></summary><br />
+  Você precisa da autorização.
   No produto, isso vem atrávez do token.
   A authorização é dada para todo user quando se cria o email ou requesita.
   Coloque na aba de *headers* com o nome: "Authorization";
@@ -133,6 +133,28 @@ http://localhost:3000/post``
   <br />
 </details>
 
+
+<details>
+  <summary><strong>Criar Categoria</strong></summary><br />
+  Você precisa da autorização.
+  No produto, isso vem atrávez do token.
+  A authorização é dada para todo user quando se cria o email ou requesita.
+  Coloque na aba de *headers* com o nome: "Authorization";
+  
+  > Criar uma nova categoria **POST**
+``http://localhost:3000/categories``
+
+```
+ {
+   "name": "Typescript"
+ }
+```
+
+> Pegar todas as categorias **GET**
+``http://localhost:3000/categories``
+
+  <br />
+</details>
 
 <details>
   <summary><strong>Criar Usuários</strong></summary><br />
